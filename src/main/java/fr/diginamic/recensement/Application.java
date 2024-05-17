@@ -3,6 +3,7 @@ package fr.diginamic.recensement;
 import java.util.Scanner;
 
 import fr.diginamic.recensement.entites.Recensement;
+import fr.diginamic.recensement.exceptions.RechPopBorneServiceException;
 import fr.diginamic.recensement.services.RechercheDepartementsPlusPeuplees;
 import fr.diginamic.recensement.services.RecherchePopulationBorneService;
 import fr.diginamic.recensement.services.RecherchePopulationDepartementService;
@@ -25,6 +26,7 @@ public class Application {
 	 * Point d'entrée
 	 * 
 	 * @param args arguments (non utilisés ici)
+	 * @throws RechPopBorneServiceException
 	 */
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
@@ -43,6 +45,7 @@ public class Application {
 
 			// Affichage du menu
 			afficherMenu();
+			System.out.println("Veuillez saisir l'option qui vous intéresse.");
 
 			// Poser une question à l'utilisateur
 			String choixMenu = scanner.nextLine();
@@ -65,9 +68,15 @@ public class Application {
 				rechercheRegion.traiter(recensement, scanner);
 				break;
 			case 4:
-				RecherchePopulationBorneService recherchePopBorne = new RecherchePopulationBorneService();
-				recherchePopBorne.traiter(recensement, scanner);
+				try {
+					RecherchePopulationBorneService recherchePopBorne = new RecherchePopulationBorneService();
+					recherchePopBorne.traiter(recensement, scanner);
+				} catch (RechPopBorneServiceException e) {
+					System.err.println(e.getMessage());
+
+				}
 				break;
+
 			case 5:
 				RechercheVillesPlusPeupleesDepartement rechercheVillesPlusPeupleesDepartement = new RechercheVillesPlusPeupleesDepartement();
 				rechercheVillesPlusPeupleesDepartement.traiter(recensement, scanner);

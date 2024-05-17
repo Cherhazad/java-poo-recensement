@@ -1,6 +1,7 @@
 package fr.diginamic.recensement.services;
 
 import java.util.List;
+
 import java.util.Scanner;
 
 import org.apache.commons.lang3.math.NumberUtils;
